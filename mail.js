@@ -19,26 +19,25 @@ class Mail {
       secure: false,
       auth: {
         user: EMAIL_HOST_USER,
-        pass: EMAIL_HOST_PASSWORD
-      }
+        pass: EMAIL_HOST_PASSWORD,
+      },
     })
   }
 
-  async send(reciever, message) {
+  async send(message) {
     try {
       const info = await this.#transporter.sendMail({
-        from: 'flame.kaliganov@gmail.com',
-        to: reciever,
-        subject: 'Welcome to Test site',
+        from: process.env.EMAIL_HOST_USER,
+        to: process.env.EMAIL_RECEIVER,
+        subject: 'Заголовок',
         text: message,
-        html: `<b>${message}</b>`
+        html: `<b>${message}</b>`,
       })
       return info.messageId
-    } catch(e) {
+    } catch (e) {
       return e
     }
   }
-
 }
 
 export default new Mail()
